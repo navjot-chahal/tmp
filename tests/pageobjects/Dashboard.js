@@ -57,9 +57,9 @@ module.exports = class Dashboard extends Page {
     const inputSelector = input("Email");
     await this.waitForElement(inputSelector);
     await this.type(inputSelector, username);
-    await this.click(exact("Next"));
+    await this.click(buttonContains("Next"));
 
-    await this.click(contains("Use password instead"));
+    await this.click(buttonContains("Use password instead"));
     await this.type(input("Enter password"), password);
     await this.type(input("Confirm password"), password);
     await this.click(buttonContains("Register"));
@@ -71,16 +71,17 @@ module.exports = class Dashboard extends Page {
 
   async loginWithPassword(username, password) {
     const inputSelector = input("Email");
+    await this.waitForElement(inputSelector);
     await this.type(inputSelector, username);
-    await this.click(exact("Next"));
-    await this.click(contains("Use password instead"));
+    await this.click(buttonContains("Next"));
+    await this.click(buttonContains("Use password instead"));
     await this.type(input("Enter password"), password);
-    await this.click(exact("Login"));
+    await this.click(buttonContains("Login"));
     await this.waitForElement({xpath: LogoutDropdown});
   }
   
   async getDeviceCode() {
-    return this.getText({xpath: AddDeviceCode});
+    return await this.getText({xpath: AddDeviceCode});
   }
   
   async registerWithCode(username, code) {

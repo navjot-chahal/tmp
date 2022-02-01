@@ -128,7 +128,7 @@ module.exports = class Page {
   
   async getText(selector) {
     await this.waitForElement(selector);
-    return this.driver.findElement(selector).then((elm) => elm.getText());
+    return await this.driver.findElement(selector).then((elm) => elm.getText());
   }
 
   async wait(time = 2000) {
