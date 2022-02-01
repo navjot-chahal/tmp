@@ -16,28 +16,28 @@ const password = "Qwerty1!";
 let dashboard;
 let dashboard2;
 
-// describe("Register and Authenticate with FIDO2", () => {
-//   console.log("Generated username is:", username2)
-//   before(async () => {
-//     dashboard = new Dashboard();
-//     await dashboard.addVirtualAuthenticator();
-//     await dashboard.open(registerURL);
-//     await dashboard.driver.manage().window().fullscreen()
-//   });
+describe("Register and Authenticate with FIDO2", () => {
+  console.log("Generated username is:", username2)
+  before(async () => {
+    dashboard = new Dashboard();
+    await dashboard.addVirtualAuthenticator();
+    await dashboard.open(registerURL);
+    await dashboard.driver.manage().window().fullscreen()
+  });
   
-//   it("Should successfully Register a fido2 user", async () => {
-//     // Register a Dashboard user
-//     await dashboard.registerFido2(username);
-//   });
+  it("Should successfully Register a fido2 user", async () => {
+    // Register a Dashboard user
+    await dashboard.registerFido2(username);
+  });
 
-//   it("Should successfully Login a fido2 Dashboard user", async () => {
-//     await dashboard.loginFido2(username);
-//   });
+  it("Should successfully Login a fido2 Dashboard user", async () => {
+    await dashboard.loginFido2(username);
+  });
 
-//   after(async () => {
-//     await dashboard.quit();
-//   });
-// });
+  after(async () => {
+    await dashboard.quit();
+  });
+});
 
 describe("Register and Authenticate with Password", () => {
 
