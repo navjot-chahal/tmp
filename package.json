@@ -1,0 +1,34 @@
+{
+  "name": "ui-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha ./tests/Dashboard/authenticate.spec.js --timeout 80000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/loginid/software/testing-tools/ui-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/loginid/software/testing-tools/ui-tests/issues"
+  },
+  "homepage": "https://gitlab.com/loginid/software/testing-tools/ui-tests#readme",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "chromedriver": "^97.0.2",
+    "dotenv": "^14.3.0",
+    "jabber": "^1.2.2",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^9.2.0",
+    "selenium-webdriver": "^4.0.0-beta.2",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.10"
+  }
+}

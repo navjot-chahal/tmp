@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  selenium:
+    platform: linux/x86_64
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+    shm_size: "2g"
+    environment:
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+  testing:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - selenium
+    command: sh -c "sleep 55s && npm run test"
