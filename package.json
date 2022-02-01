@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha ./tests/Dashboard/authenticate.spec.js --timeout 80000"
+    "test": "mocha ./tests/Dashboard/authenticate.spec.js --timeout 30000"
   },
   "repository": {
     "type": "git",

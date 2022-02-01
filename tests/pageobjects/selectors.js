@@ -1,9 +1,9 @@
 module.exports = class Selectors {
   static selectors = {
-    contains: (text) => ({xpath: `//*[contains(text(),'${text}')]`}),
-    exact: (text) => ({xpath: `//*[text()='${text}']`}),
+    contains: (text) => ({xpath: `//*[contains(text(),"${text}")]`}),
+    exact: (text) => ({xpath: `//*[text()="${text}"]`}),
     button: (text) => ({ xpath: `//button[text()="${text}"]` }),
-    buttonContains: (text) => ({ xpath: `//button[contains(text(),'${text}')]` }),
+    buttonContains: (text) => ({ xpath: `//button[contains(text(),"${text}")]` }),
     spanButton: (text) => ({ xpath: `//span[text()="${text}"]` }),
     input: (text, prop = "placeholder") => ({
       xpath: `//input[@${prop}="${text}"]`,
