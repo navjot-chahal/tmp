@@ -15,4 +15,4 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - selenium
-    command: sh -c "sleep 55s && npm run admin"
+    command: sh -c "sleep 55s && npm run authen"
