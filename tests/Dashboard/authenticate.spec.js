@@ -47,12 +47,12 @@ describe("Register and Authenticate with FIDO2 Remote Authenticator", () => {
     await dashboard.open(registerURL);
   });
 
-  it("Should successfully register a user with password", async () => {
+  it("Should successfully register a user with Remote Authenticator", async () => {
     // Register Dashboard user with password
     await dashboard.registerFido2(usernameRemote, true);
   });
   
-  it("Should successfully Login Dashboard user with password", async () => {
+  it("Should successfully Login Dashboard user with Remote Authenticator", async () => {
     // Login Dashboard user with password
     await dashboard.loginFido2(usernameRemote);
   });

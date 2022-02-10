@@ -13,6 +13,7 @@ const NextButton = `//*[@id="app"]/div/div/div/div/div/form/div[2]/button`;
 const LoginButton = `//*[@id="app"]/div/div/div/div/div/form/div[2]/div/div/button[1]`;
 const LogoutDropdown = `//*[@id="app"]/div/div[2]/div/div/div/header/div[3]/div/div[1]`;
 const LogoutButton = `//*[@id="app"]/div/div[2]/div/div/div/header/div[3]/div/div[2]/ul/li[2]`;
+const AddDeviceCode  = `//*[@id="app"]/div/div/div/p`;
 
 module.exports = class Dashboard extends Page {
   constructor() {
@@ -169,5 +170,20 @@ module.exports = class Dashboard extends Page {
     await this.click(buttonContains("Delete"));
     await this.click(classButton("modal-container", "Delete"));
     await this.navigateTo(dashboardHomeURL);
+  }
+
+  async getDeviceCode() {
+    return this.getText({xpath: AddDeviceCode});
+  }
+
+  async registerWithCode(username, code) {
+    const inputSelector = input("Email");
+    await this.type(inputSelector, username);
+    await this.click(exact("Next"));
+    await this.click(contains("Add new device"));
+    // Enter Device Code
+    await this.type(input("XXXXXX"), code);
+    await this.click(exact("Add device"));
+    await this.waitForElement({xpath: LogoutDropdown});
   }
 };
