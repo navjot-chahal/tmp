@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha ./tests/Dashboard/authenticate.spec.js --timeout 30000"
+    "authen": "mocha ./tests/Dashboard/authenticate.spec.js --timeout 120000",
+    "admin": "mocha ./tests/Dashboard/admin.spec.js --timeout 120000"
   },
   "repository": {
     "type": "git",
@@ -25,8 +26,8 @@
     "jabber": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^9.2.0",
-    "selenium-webdriver": "^4.0.0-beta.2",
-    "typescript": "^4.5.5"
+    "node-fetch": "^2.6.7",
+    "selenium-webdriver": "^4.0.0-beta.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.10"

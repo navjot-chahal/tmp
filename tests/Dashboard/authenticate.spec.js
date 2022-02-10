@@ -1,14 +1,14 @@
 require("dotenv").config();
-// const { expect } = require("chai");
 const Jabber = require("jabber");
-const { markAsUntransferable } = require("worker_threads");
 const Dashboard = require("../pageobjects/Dashboard");
 
-const registerURL = "https://qa.loginid.io/en/register";
-const loginURL = "https://qa.loginid.io/en/login";
+const environment = process.env.LOGINID_ENV || "qa";
+const registerURL = `https://${environment}.loginid.io/en/register`;
+const loginURL = `https://${environment}.loginid.io/en/login`;
 
 const jabber = new Jabber();
 const createLoginIdEmail = () => jabber.createEmail("example.com");
+const usernameRemote =  `${Date.now()}` + createLoginIdEmail();
 const username2 =  `${Date.now()}` + createLoginIdEmail();
 const username =  `${Date.now()}` + createLoginIdEmail();
 const password = "Qwerty1!";
@@ -22,7 +22,6 @@ describe("Register and Authenticate with FIDO2", () => {
     dashboard = new Dashboard();
     await dashboard.addVirtualAuthenticator();
     await dashboard.open(registerURL);
-    await dashboard.driver.manage().window().fullscreen()
   });
   
   it("Should successfully Register a fido2 user", async () => {
@@ -35,7 +34,31 @@ describe("Register and Authenticate with FIDO2", () => {
   });
 
   after(async () => {
-    await dashboard.quit();
+    await dashboard.close();
+  });
+});
+
+describe("Register and Authenticate with FIDO2 Remote Authenticator", () => {
+
+  before(async () => {
+    dashboard = new Dashboard();
+    await dashboard.addVirtualAuthenticator();
+    await dashboard.addVirtualAuthenticator(true);
+    await dashboard.open(registerURL);
+  });
+
+  it("Should successfully register a user with password", async () => {
+    // Register Dashboard user with password
+    await dashboard.registerFido2(usernameRemote, true);
+  });
+  
+  it("Should successfully Login Dashboard user with password", async () => {
+    // Login Dashboard user with password
+    await dashboard.loginFido2(usernameRemote);
+  });
+
+  after(async () => {
+    await dashboard.close();
   });
 });
 
@@ -43,9 +66,7 @@ describe("Register and Authenticate with Password", () => {
 
   before(async () => {
     dashboard2 = new Dashboard();
-    await dashboard2.addVirtualAuthenticator();
     await dashboard2.open(registerURL);
-    // await dashboard2.driver.manage().window().fullscreen()
   });
 
   it("Should successfully register a user with password", async () => {
@@ -57,10 +78,6 @@ describe("Register and Authenticate with Password", () => {
     // Login Dashboard user with password
     await dashboard2.loginWithPassword(username2, password);
   });
-
-  // after(async () => {
-  //   await dashboard2.close();
-  // });
 });
 
 describe("Add new Device to the Password Dashboard user", async () => {
@@ -81,7 +98,6 @@ describe("Add new Device to the Password Dashboard user", async () => {
     dashboard2 = new Dashboard();;
     await dashboard2.addVirtualAuthenticator();
     await dashboard2.open(loginURL)
-    // await dashboard2.driver.manage().window().fullscreen()
     await dashboard2.registerWithCode(username2, AddDeviceCode);
   });
   after(async () => {

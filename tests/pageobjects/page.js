@@ -4,7 +4,6 @@ const { Command } = require("selenium-webdriver/lib/command");
 require("chromedriver");
 
 const env = process.env.NODE_ENV;
-// const env = "test";
 const { until, Capabilities } = webdriver;
 
 module.exports = class Page {
@@ -17,14 +16,8 @@ module.exports = class Page {
     if (env === "test") {
       const capabilities = Capabilities.chrome();
 
-      // const options = new chrome.Options();
-      // options.addArguments("--no-sandbox");
-      // options.addArguments("--disable-dev-shm-usage");
-
       this.driver = new webdriver.Builder()
-        // .forBrowser(browser)
         .usingServer("http://selenium:4444/wd/hub")
-        // .setChromeOptions(options)
         .withCapabilities(capabilities)
         .build();
     } else {
@@ -36,7 +29,7 @@ module.exports = class Page {
     }
   }
 
-  async addVirtualAuthenticator() {
+  async addVirtualAuthenticator(transport = "internal") {
     const sessionId = (await this.driver.getSession()).id_;
 
     this.driver
@@ -52,7 +45,7 @@ module.exports = class Page {
     );
     addVirtualAuthCommand.setParameter("sessionId", sessionId);
     addVirtualAuthCommand.setParameter("protocol", "ctap2");
-    addVirtualAuthCommand.setParameter("transport", "internal");
+    addVirtualAuthCommand.setParameter("transport", transport);
     addVirtualAuthCommand.setParameter("hasResidentKey", true);
     addVirtualAuthCommand.setParameter("isUserConsenting", true);
     addVirtualAuthCommand.setParameter("isUserVerified", true);
@@ -78,10 +71,6 @@ module.exports = class Page {
 
   async close() {
     await this.driver.close();
-  }
-
-  async quit() {
-    await this.driver.quit();
   }
 
   async waitForElement(selector) {
@@ -128,7 +117,7 @@ module.exports = class Page {
   
   async getText(selector) {
     await this.waitForElement(selector);
-    return await this.driver.findElement(selector).then((elm) => elm.getText());
+    return this.driver.findElement(selector).then((elm) => elm.getText());
   }
 
   async wait(time = 2000) {
@@ -136,6 +125,6 @@ module.exports = class Page {
   }
 
   async waitUntil(callback) {
-    await this.driver.wait(callback);
+    await this.driver.wait(callback, 1000);
   }
 };
