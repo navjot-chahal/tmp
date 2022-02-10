@@ -66,6 +66,7 @@ describe("Register and Authenticate with Password", () => {
 
   before(async () => {
     dashboard2 = new Dashboard();
+    await dashboard2.addVirtualAuthenticator();
     await dashboard2.open(registerURL);
   });
 
